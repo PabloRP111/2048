@@ -1,9 +1,15 @@
 const gridContainer = document.querySelector('.grid-container');
 const GRID_SIZE = 4;
 const board = [];
+const backBoard = [];
 let score = 0;
+let nMoves = 0;
 let endGame = false;
+let isBack = false;
 const scoreDisplay = document.getElementById('score');
+const movesDisplay = document.getElementById('nMoves');
+const resetButton = document.getElementById('restart-btn');
+const backButton = document.getElementById('back-btn');
 
 function isGameOver()
 {
@@ -86,11 +92,11 @@ function addRandomTile()
 
 function moveBlocks(i, j, x, y)
 {
-	if ((i >=  GRID_SIZE || i < 0)
-		&& (j >=  GRID_SIZE || j < 0)
-		&& (x >=  GRID_SIZE || x < 0)
-		&& (y >=  GRID_SIZE || y < 0))
-		return 1;
+	if (i >= GRID_SIZE || i < 0
+		|| j >= GRID_SIZE || j < 0 
+		|| x >= GRID_SIZE || x < 0
+		|| y >= GRID_SIZE || y < 0)
+		return true;
 
 	//Fusion
 	if (board[x][y].value == board[i][j].value
@@ -102,8 +108,8 @@ function moveBlocks(i, j, x, y)
 		score += board[x][y].value;
 		scoreDisplay.textContent = score;
 
-		board[i][j].cell.classList.add('merged');
-		setTimeout(() => board[i][j].cell.classList.remove('merged'), 200);
+		board[x][y].cell.classList.add('merged');
+		setTimeout(() => board[x][y].cell.classList.remove('merged'), 200);
 
 		if (board[x][y].value == 2048 && !endGame)
 		{
@@ -120,6 +126,8 @@ function moveBlocks(i, j, x, y)
 	}
 	updateCellStyle(board[x][y].value, board[x][y].cell);
 	updateCellStyle(board[i][j].value, board[i][j].cell);
+	if (board[x][y].mergedThisTurn)
+		return true;
 }
 
 document.addEventListener('keydown', (event) => {
@@ -144,9 +152,14 @@ document.addEventListener('keydown', (event) => {
 		{
 			for (let j = 0; j < GRID_SIZE; j++)
 			{
+				backBoard[i][j].value = board[i][j].value;
+				backBoard[i][j].mergedThisTurn = board[i][j].mergedThisTurn;
 				board[i][j].mergedThisTurn = false;
 			}
 		}
+		nMoves += 1;
+		movesDisplay.textContent = nMoves;
+		isBack = false;
 	}
 
 	if (key === 'ArrowLeft')
@@ -164,7 +177,8 @@ document.addEventListener('keydown', (event) => {
 					{
 						if (board[i][z].value != 0 && (board[i][j].value != board[i][z].value))
 							break ;
-						moveBlocks(i, j, i, z);
+						if (moveBlocks(i, j, i, z))
+							break ;
 						j = z;
 						z -= 1; 
 					}
@@ -189,7 +203,8 @@ document.addEventListener('keydown', (event) => {
 					{
 						if (board[i][z].value != 0 && (board[i][j].value != board[i][z].value))
 							break ;
-						moveBlocks(i, j, i, z);
+						if (moveBlocks(i, j, i, z))
+							break;
 						j = z;
 						z += 1;
 					}
@@ -214,7 +229,8 @@ document.addEventListener('keydown', (event) => {
 					{
 						if (board[z][j].value != 0 && (board[i][j].value != board[z][j].value))
 							break ;
-						moveBlocks(i, j, z, j);
+						if (moveBlocks(i, j, z, j))
+							break;
 						i = z;
 						z -= 1;
 					}
@@ -239,7 +255,8 @@ document.addEventListener('keydown', (event) => {
 					{
 						if (board[z][j].value != 0 && (board[i][j].value != board[z][j].value))
 							break ;
-						moveBlocks(i, j, z, j);
+						if (moveBlocks(i, j, z, j))
+							break ;
 						i = z;
 						z += 1;
 					}
@@ -256,6 +273,7 @@ function createMap()
 	for (let i = 0; i < GRID_SIZE; i++)
 	{
 		board[i] = [];  // inicializa fila en datos
+		backBoard[i] = [];
 		for (let j = 0; j < GRID_SIZE; j++)
 		{
 			const cell = document.createElement('div'); // Crea elemento div
@@ -265,11 +283,49 @@ function createMap()
 
 			board[i][j] = {
 				value: 0,
-				cell: cell
+				cell: cell,
+				mergedThisTurn: false
+			};
+			backBoard[i][j] = {
+				value: 0,
+				mergedThisTurn: false
 			};
 		}
 	}
 }
+
+backButton.addEventListener('click', () => {
+	console.log('Botón de reset presionado');
+	if (nMoves <= 0 || isBack == true)
+		return ;
+	nMoves--;
+	movesDisplay.textContent = nMoves;
+	isBack = true;
+	for (let i = 0; i < GRID_SIZE; i++)
+	{
+		for (let j = 0; j < GRID_SIZE; j++)
+		{
+			board[i][j].value = backBoard[i][j].value;
+			board[i][j].mergedThisTurn = backBoard[i][j].mergedThisTurn;
+			updateCellStyle(board[i][j].value, board[i][j].cell);
+		}
+	}
+});
+
+resetButton.addEventListener('click', () => {
+	console.log('Botón de reset presionado');
+	for (let i = 0; i < GRID_SIZE; i++)
+	{
+		for (let j = 0; j < GRID_SIZE; j++)
+		{
+			board[i][j].value = 0;
+			board[i][j].mergedThisTurn = false;
+			updateCellStyle(board[i][j].value, board[i][j].cell);
+		}
+	}
+	addRandomTile();
+	addRandomTile();
+});
 
 createMap();
 addRandomTile();
