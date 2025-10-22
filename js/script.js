@@ -188,7 +188,6 @@ document.addEventListener('keydown', (event) => {
 			}
 			j = 1;
 		}
-		addRandomTile();
 	}
 	else if (key === 'ArrowRight')
 	{
@@ -214,7 +213,6 @@ document.addEventListener('keydown', (event) => {
 			}
 			j = 2;
 		}
-		addRandomTile();
 	}
 	else if (key === 'ArrowUp')
 	{
@@ -240,7 +238,6 @@ document.addEventListener('keydown', (event) => {
 			}
 			i = 1;
 		}
-		addRandomTile();
 	}
 	else if (key === 'ArrowDown')
 	{
@@ -266,7 +263,6 @@ document.addEventListener('keydown', (event) => {
 			}
 			i = 2;
 		}
-		addRandomTile();
 	}
 	if(isMoved)
 	{
@@ -274,6 +270,7 @@ document.addEventListener('keydown', (event) => {
 		movesDisplay.textContent = nMoves;
 		isBack = false;
 		isMoved = false;
+		addRandomTile();
 	}
 });
 
@@ -305,7 +302,7 @@ function createMap()
 
 backButton.addEventListener('click', () => {
 	console.log('Botón de reset presionado');
-	if (nMoves <= 0 || isBack == true)
+	if (nMoves <= 0 || isBack == true || endGame == true)
 		return ;
 	nMoves--;
 	movesDisplay.textContent = nMoves;
