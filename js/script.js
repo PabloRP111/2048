@@ -3,6 +3,7 @@ const GRID_SIZE = 4;
 const board = [];
 const backBoard = [];
 let score = 0;
+let backScore = 0;
 let nMoves = 0;
 let endGame = false;
 let isBack = false;
@@ -105,6 +106,7 @@ function moveBlocks(i, j, x, y)
 		board[i][j].value = 0;
 		board[x][y].value *= 2;
 		board[x][y].mergedThisTurn = true;
+		backScore = score;
 		score += board[x][y].value;
 		scoreDisplay.textContent = score;
 
@@ -300,6 +302,8 @@ backButton.addEventListener('click', () => {
 		return ;
 	nMoves--;
 	movesDisplay.textContent = nMoves;
+	score = backScore;
+	scoreDisplay.textContent = score;
 	isBack = true;
 	for (let i = 0; i < GRID_SIZE; i++)
 	{
@@ -314,6 +318,11 @@ backButton.addEventListener('click', () => {
 
 resetButton.addEventListener('click', () => {
 	console.log('Botón de reset presionado');
+	nMoves = 0;
+	movesDisplay.textContent = nMoves;
+	score = 0;
+	backScore = 0;
+	scoreDisplay.textContent = score;
 	for (let i = 0; i < GRID_SIZE; i++)
 	{
 		for (let j = 0; j < GRID_SIZE; j++)
