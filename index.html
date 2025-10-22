@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>2048 Game</title>
+		<link rel="stylesheet" href="./css/styles.css">
+	</head>
+	<body>
+		
+		<div class="game-container">
+			<h1 id="titulo">2048</h1>
+
+			<div class="board-wrapper">
+				<div class="grid-container">
+				</div>
+				<img src="./assets/arrows.png" alt="Movement arrows" class="side-image">
+			</div>
+
+			<div class="score-container">
+				<div class="score">
+					<span>Score: <span id="score">0</span></span>
+				</div>
+				<div class="buttons">
+					<button id="restart-btn" class="btns">Restart</button>
+					<button id="back-btn" class="btns">BackMove</button>
+				</div>
+			</div>
+		</div>
+
+		<script src="./js/script.js"></script>
+	</body>
+</html>
