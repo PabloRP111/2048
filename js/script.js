@@ -7,6 +7,7 @@ let backScore = 0;
 let nMoves = 0;
 let endGame = false;
 let isBack = false;
+let isMoved = false;
 const scoreDisplay = document.getElementById('score');
 const movesDisplay = document.getElementById('nMoves');
 const resetButton = document.getElementById('restart-btn');
@@ -120,11 +121,13 @@ function moveBlocks(i, j, x, y)
 				alert('🎉 ¡Ganaste! Has creado el bloque 2048 🎉');
 			}, 100);
 		}
+		isMoved = true;
 	}
 	else if (board[x][y].value == 0) // Mover
 	{
 		board[x][y].value = board[i][j].value;
 		board[i][j].value = 0;
+		isMoved = true;
 	}
 	updateCellStyle(board[x][y].value, board[x][y].cell);
 	updateCellStyle(board[i][j].value, board[i][j].cell);
@@ -159,9 +162,6 @@ document.addEventListener('keydown', (event) => {
 				board[i][j].mergedThisTurn = false;
 			}
 		}
-		nMoves += 1;
-		movesDisplay.textContent = nMoves;
-		isBack = false;
 	}
 
 	if (key === 'ArrowLeft')
@@ -267,6 +267,13 @@ document.addEventListener('keydown', (event) => {
 			i = 2;
 		}
 		addRandomTile();
+	}
+	if(isMoved)
+	{
+		nMoves += 1;
+		movesDisplay.textContent = nMoves;
+		isBack = false;
+		isMoved = false;
 	}
 });
 
