@@ -317,6 +317,7 @@ backButton.addEventListener('click', () => {
 });
 
 resetButton.addEventListener('click', () => {
+	endGame = false;
 	console.log('Botón de reset presionado');
 	nMoves = 0;
 	movesDisplay.textContent = nMoves;
