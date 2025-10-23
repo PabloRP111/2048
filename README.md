@@ -12,7 +12,10 @@ El juego incluye:
 - 🔙 Función de **deshacer** (retroceder un movimiento).  
 - 🧩 Interfaz sencilla y funcional, totalmente en cliente (sin backend).
 
-## 🚀 Cómo probarlo
+## 🎮 [**JUGAR 2048 AHORA 🕹️**](https://pablorp111.github.io/2048/)  
+_Disfruta el desafío directamente en tu navegador._
+
+## 🚀 Cómo probarlo en local
 
 1. Clona o descarga este repositorio:  
    ```bash
