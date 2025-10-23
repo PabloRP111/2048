@@ -1,8 +1,27 @@
+body
+{
+	background: linear-gradient(220deg, #faf8ef, #00A86B);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	font-family: 'Courier New', Courier, monospace;
+	overflow: hidden;
+}
+
 .game-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	gap: 2rem;
+	width: 90vw;
+	max-width: 500px;
+	max-height: 95vh;
+	border-radius: 20px;
+	background-color: #00A86B;
+	padding: 2rem;
+	box-shadow: 0 0 30px rgba(0,0,0,0.3);
 }
 
 .board-wrapper {
@@ -10,6 +29,7 @@
 	align-items: center;
 	justify-content: center;
 	gap: 5vh;
+	width: 70%;
 }
 
 .grid-container
@@ -17,9 +37,13 @@
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: 2px;
-	width: 30vw;
-	height: 50vh;
+	width: 100%;
+	aspect-ratio: 1 / 1;
 	margin: auto;
+	background: #bbada0;
+	border-radius: 10px;
+	padding: 8px;
+	box-shadow: 0 0 30px rgba(0,0,0,0.2);
 }
 
 .side-image {
@@ -49,18 +73,21 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 4rem;
+	font-size: clamp(1rem, 4vw, 3rem);
 	font-weight: bold;
 }
 
-.score-container
-{
-	margin-top: 15vh;
-	padding-top: 2vh;
-	font-size: 2em;
-	font-weight: bold;
+.score-container {
 	text-align: center;
+	font-size: clamp(1rem, 2vw, 1.5rem);
+	background: papayawhip;
+	padding: 1rem;
+	border-radius: 10px;
+	width: 70%;
+	box-sizing: border-box;
+	box-shadow: 0 0 30px rgba(0,0,0,0.2);
 }
+
 
 .buttons {
 	display: flex;
@@ -72,11 +99,12 @@
 
 .btns 
 {
-	border: 1px;
-	border-radius: 5px;
+	border: none;
+	border-radius: 8px;
 	padding: 14px 28px;
 	cursor: pointer;
 	font-weight: bold;
+	transition: background-color 0.2s ease;
 }
 
 #restart-btn {
@@ -97,19 +125,21 @@
 
 #titulo
 {
-	display: flex;
-	justify-content: center;
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: bold;
-	font-size: 10vh;
-	margin-top: 2vh;
-	margin-bottom: 2vh;
+	font-size: clamp(3rem, 6vw, 5rem);
+	margin: 0;
+	text-align: center;
 }
 
-body
+#scoreText
 {
-	background-color: #00A86B;
+	font-weight: bold;
 }
+
+#nMoveText
+{
+	font-weight: bold;
+}
+
 
 /* ANIMACIONES */
 @keyframes pop {
@@ -129,9 +159,4 @@ body
 
 .cell.merged {
   animation: merge 0.2s ease-out;
-}
-
-.cell.slide {
-  transition: transform 0.15s ease;
-  transform: scale(1.05);
 }
